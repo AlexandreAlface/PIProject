@@ -1,0 +1,18 @@
+#Ignorar configurações de IDE
+.idea/
+.vscode/
+
+#Ignorar arquivos de sistema
+.DS_Store
+Thumbs.db
+
+#Ignorar dependências do Composer
+vendor/
+
+#Ignorar arquivos gerados pelo Laravel
+storage/.key
+.env
+.env.
+
+#Ignorar arquivos de cache do Laravel
+bootstrap/cache/

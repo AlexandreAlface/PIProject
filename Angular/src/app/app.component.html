@@ -1,0 +1,71 @@
+<header class="noPrint">
+  <nav id="navBar" style="display: flex; height: 100px; align-items: center; background-color: #f4f4f4; padding: 10px 20px; box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);">
+    <div style="display: flex; align-items: center; margin-right: 20px; height: 100%">
+      <img src="./assets/biblioteca.png" alt="Logotipo" style="height: 100%; margin-right: 10px;">
+      <!-- <span style="font-size: 18px; font-weight: bold; color: #333;">{{file.shared.Title}}</span>-->
+    </div>
+
+    <div style="display: flex; gap: 10px; align-items: center; flex-grow: 1;">
+      <!-- Seleção de Idioma -->
+      <mat-select style="width: 100px; height: 18px; font-size: 14px;" (selectionChange)="updateLanguage()" [(value)]="selected" class="navelement3" id="linguagem">
+        <mat-option *ngFor="let lang of langs" [value]="lang.value">
+          <img class="flag" [src]="lang.img" style="height: 100%;"> {{ lang.str }}
+        </mat-option>
+      </mat-select>
+
+      <!-- Links de Navegação -->
+      <a id="startnav"
+         class="navelement"
+         [ngClass]="{'highlightGray': activePage === 'D'}"
+         (click)="moveRoute('D')"
+         [routerLink]="'/' + navItems['D']">
+        {{ navItems['D'] }}
+      </a>
+      <a id="publicationsnav"
+         class="navelement"
+         [ngClass]="{'highlightGray': activePage === 'P'}"
+         (click)="moveRoute('P')"
+         [routerLink]="'/' + navItems['P']">
+        {{ navItems['P'] }}
+      </a>
+      <a id="authorsnav"
+         class="navelement"
+         [ngClass]="{'highlightGray': activePage === 'I'}"
+         (click)="moveRoute('I')"
+         [routerLink]="'/' + navItems['I']">
+        {{ navItems['I'] }}
+      </a>
+
+      <!-- Botão de Administrador (visível apenas se autenticado) -->
+      <a id="adminnav"
+         *ngIf="autenticado"
+         class="navelement"
+         [ngClass]="{'highlightGray': activePage === 'A'}"
+         (click)="moveRoute('A')"
+         [routerLink]="'/Administrador'">
+        {{ navItems['A'] }}
+      </a>
+    </div>
+
+    <!-- Botões de Login/Logout -->
+    <a *ngIf="!autenticado"
+       id="loginnav"
+       class="navelement2"
+       [ngClass]="{'highlightGreen': activePage === 'L'}"
+       (click)="moveRoute('L')"
+       [routerLink]="'/' + navItems['L']">
+      {{ navItems['L'] }}
+    </a>
+    <a *ngIf="autenticado"
+       id="logoutnav"
+       class="navelement2"
+       [ngClass]="{'highlightGreen': activePage === 'O'}"
+       (click)="moveRoute('O')"
+       [routerLink]="'/' + navItems['O']">
+      {{ navItems['O'] }}
+    </a>
+  </nav>
+</header>
+
+
+<router-outlet></router-outlet>

@@ -1,0 +1,321 @@
+<br>
+<div class="filtros">
+  <div class="FilterTitle">
+    {{ labels.nav.Publications }}
+  </div>
+  <br/>
+  <form [formGroup]="filtersForm">
+    <div class="graficoInfo">
+      <div class="data">
+        <label class="filtro">{{ labels.filters.Title }}:</label>
+        <input formControlName="title" type="text" id="title" placeholder="{{ labels.filters.TitlePlaceholder }}"/>
+        &nbsp;&nbsp;
+
+        <label class="filtro">{{ labels.filters.Investigator }}:</label>
+        <input formControlName="investigator" type="text" placeholder="{{ labels.filters.InvestigatorPlaceholder }}"
+               id="investigator"/>
+        &nbsp;&nbsp;
+
+        <label class="filtro">{{labels.filters.Orcid}}: </label>
+        <input formControlName="orcid" type="text" id="orcid" placeholder="{{labels.filters.Orcid}}">
+        &nbsp;&nbsp;
+
+        <!-- Novos controles para os tipos -->
+        <label class="filtro">{{ labels.dashboard.Revista }}:</label>
+        <input formControlName="revista" type="checkbox" id="revistaCheck"/>&nbsp;&nbsp;
+
+        <label class="filtro">{{ labels.dashboard.Capitulo }}:</label>
+        <input formControlName="capitulo" type="checkbox" id="capituloCheck"/>&nbsp;&nbsp;
+
+        <label class="filtro">{{ labels.dashboard.Conferencia }}:</label>
+        <input formControlName="conferencia" type="checkbox" id="conferenciaCheck"/>&nbsp;&nbsp;
+
+        <label class="filtro">{{ labels.dashboard.Outro }}:</label>
+        <input formControlName="outro" type="checkbox" id="outroCheck"/>&nbsp;&nbsp;
+
+        <br/><br/>
+        <label class="filtro">{{ labels.filters.Department }}:</label>
+        <select formControlName="department" id="departamento">
+          <option value="Todos">{{ labels.filters.All }}</option>
+          <option *ngFor="let dept of departAllList" [value]="dept.acronym">
+            {{ dept.acronym }} - {{ dept.name }}
+          </option>
+        </select>
+        &nbsp;&nbsp;
+
+        <label class="filtro">{{ labels.filters.Database }}:</label>
+        <select formControlName="database" id="db">
+          <option value="Ambos">{{ labels.filters.Both }}</option>
+          <option value="Scopus">Scopus</option>
+          <option value="WBS">Web of Science</option>
+        </select>
+        &nbsp;&nbsp;
+
+        <br/><br/>
+        <label class="filtro">{{ labels.filters.Area }}:</label>
+        <select formControlName="area" id="curso">
+          <option value="Todos">{{ labels.filters.All }}</option>
+          <option *ngFor="let ciclo of ciclosEstudosList" [value]="ciclo.id">
+            {{ciclo.id}} - {{ ciclo.nome }}
+          </option>
+        </select>
+        &nbsp;&nbsp;
+
+        <br/><br/>
+        <label class="filtro">{{ labels.filters.DataStart }}:</label>
+        <input formControlName="startDate" type="date" min="1900-01-01" max="2900-12-31" id="dataInicial"/>
+        &nbsp;&nbsp;
+
+        <label class="filtro">{{ labels.filters.DataEnd }}:</label>
+        <input formControlName="endDate" type="date" min="1900-01-01" max="2900-12-31" id="dataInicial"/>
+      </div>
+      <br/>
+      <div class="actions">
+        <button type="button" (click)="resetFilters()"
+                matTooltip="{{ labels.filters.Clear }}">{{ labels.filters.Clear }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<br/><br/>
+<div class="found">
+  {{ labels.shared.Found }}: {{ pagination.total }}
+  <span *ngIf="getActiveFilters()" class="active-filters" [innerHTML]="getActiveFilters()"></span>
+</div>
+
+<div class="endPage2">
+  <label>{{ labels.shared.Show }}: &nbsp;</label>
+  <div class="pages">
+    <mat-select id="pages" [(value)]="pagination.size" (valueChange)="onPageSizeChange($event)">
+      <mat-option [value]="10">10</mat-option>
+      <mat-option [value]="25">25</mat-option>
+      <mat-option [value]="50">50</mat-option>
+      <mat-option [value]="-1">{{ labels.filters.All }}</mat-option>
+    </mat-select>
+  </div>
+  <div></div>
+  <label>{{ labels.shared.Sort }}: &nbsp;</label>
+  <div class="pages">
+    <mat-select id="sort" [(value)]="filtersForm.value.sort" (valueChange)="applyFilters()">
+      <mat-option value="date">{{ labels.shared.Date }}</mat-option>
+      <mat-option value="dateR">{{ labels.shared.Date }} ({{ labels.shared.Reversed }})</mat-option>
+      <mat-option value="name">{{ labels.filters.Title }}</mat-option>
+      <mat-option value="nameR">{{ labels.filters.Title }} ({{ labels.shared.Reversed }})</mat-option>
+      <mat-option value="type">{{ labels.shared.Type }}</mat-option>
+      <mat-option value="typeR">{{ labels.shared.Type }} ({{ labels.shared.Reversed }})</mat-option>
+    </mat-select>
+  </div>
+  <div></div>
+  <div class="nowPage" *ngIf="pagination.total > 0">
+    <button class="buttonSmall" (click)="changePage(-1)" [disabled]="pagination.page === 0">&lt;&lt;</button> &nbsp;
+    <button class="buttonSmall" (click)="changePage(-1)" [disabled]="pagination.page === 0">&lt;</button>&nbsp;
+    {{ pagination.page * (pagination.size === -1 ? pagination.total : pagination.size) + 1 }}
+    - {{ pagination.size === -1 ? pagination.total : Math.min((pagination.page + 1) * pagination.size, pagination.total) }}
+    &nbsp;
+    <button class="buttonSmall" (click)="changePage(1)"
+            [disabled]="pagination.page >= Math.ceil(pagination.total / pagination.size) - 1">&gt;
+    </button>
+    &nbsp;
+    <button class="buttonSmall" (click)="changePage(1)"
+            [disabled]="pagination.page >= Math.ceil(pagination.total / pagination.size) - 1">&gt;&gt;
+    </button>
+    &nbsp;
+  </div>
+</div>
+
+<div *ngIf="isLoading" class="center">
+  {{ labels.shared.Loading }}
+</div>
+
+<div class="inputs">
+  <div class="oneInput publication-item" *ngFor="let publication of publications">
+    <!-- Data de Publicação e Tipo (mesma linha) -->
+    <div class="field date-row"
+         *ngIf="publication.artigo.data_publicacao && publication.artigo.data_publicacao !== 'N/A'">
+      <div class="date-info">
+        <span class="field-label">{{ labels.publications.Date }}:</span>
+        <span class="field-value">
+          {{ publication.artigo.data_publicacao }}
+        </span>
+      </div>
+      <div class="type-info" *ngIf="publication.artigo.tipo && publication.artigo.tipo !== 'N/A'">
+        {{ publication.artigo.tipo }}
+      </div>
+    </div>
+    <br>
+
+    <!-- Título -->
+    <div class="field" *ngIf="publication.artigo.titulo && publication.artigo.titulo !== 'N/A'">
+      <span class="field-label">{{ labels.publications.Title }}:</span>
+      <span class="field-value title">
+        {{ publication.artigo.titulo }}
+      </span>
+    </div>
+    <br>
+
+    <!-- Autores -->
+    <div class="field" *ngIf="publication.artigo.autores_artigo && publication.artigo.autores_artigo !== 'N/A'">
+      <span class="field-label">{{ labels.publications.Others }}:</span>
+      <span class="field-value">
+    {{ publication.artigo.autores_artigo.replaceAll(';', ',') }}.
+  </span>
+    </div>
+
+    <br>
+
+    <!-- Descrição -->
+    <div class="field" *ngIf="publication.artigo.descricao && publication.artigo.descricao !== 'N/A'">
+      <span class="field-label">{{ labels.publications.Description }}:</span>
+      <span class="field-value">
+        {{ publication.artigo.descricao }}
+      </span>
+    </div>
+
+    <a class="readMore click" (click)="navigateToPublication(publication.artigo.id)">
+      {{ labels.shared.ReadMore }}
+    </a>
+  </div>
+</div>
+
+<div class="endPage2">
+  <!-- Repete a paginação na parte inferior, se necessário -->
+  <label>{{ labels.shared.Show }}: &nbsp;</label>
+  <div class="pages">
+    <mat-select id="pages" [(value)]="pagination.size" (valueChange)="onPageSizeChange($event)">
+      <mat-option [value]="10">10</mat-option>
+      <mat-option [value]="25">25</mat-option>
+      <mat-option [value]="50">50</mat-option>
+      <mat-option [value]="-1">{{ labels.filters.All }}</mat-option>
+    </mat-select>
+  </div>
+  <div></div>
+  <label>{{ labels.shared.Sort }}: &nbsp;</label>
+  <div class="pages">
+    <mat-select id="sort" [(value)]="filtersForm.value.sort" (valueChange)="applyFilters()">
+      <mat-option value="date">{{ labels.shared.Date }}</mat-option>
+      <mat-option value="dateR">{{ labels.shared.Date }} ({{ labels.shared.Reversed }})</mat-option>
+      <mat-option value="name">{{ labels.filters.Title }}</mat-option>
+      <mat-option value="nameR">{{ labels.filters.Title }} ({{ labels.shared.Reversed }})</mat-option>
+      <mat-option value="type">{{ labels.shared.Type }}</mat-option>
+      <mat-option value="typeR">{{ labels.shared.Type }} ({{ labels.shared.Reversed }})</mat-option>
+    </mat-select>
+  </div>
+  <div></div>
+  <div class="nowPage" *ngIf="pagination.total > 0">
+    <button class="buttonSmall" (click)="changePage(-1)" [disabled]="pagination.page === 0">&lt;&lt;</button> &nbsp;
+    <button class="buttonSmall" (click)="changePage(-1)" [disabled]="pagination.page === 0">&lt;</button>&nbsp;
+    {{ pagination.page * (pagination.size === -1 ? pagination.total : pagination.size) + 1 }}
+    - {{ pagination.size === -1 ? pagination.total : Math.min((pagination.page + 1) * pagination.size, pagination.total) }}
+    &nbsp;
+    <button class="buttonSmall" (click)="changePage(1)"
+            [disabled]="pagination.page >= Math.ceil(pagination.total / pagination.size) - 1">&gt;
+    </button>
+    &nbsp;
+    <button class="buttonSmall" (click)="changePage(1)"
+            [disabled]="pagination.page >= Math.ceil(pagination.total / pagination.size) - 1">&gt;&gt;
+    </button>
+    &nbsp;
+  </div>
+</div>
+
+<style>
+  .date-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Caixa para os dados da data */
+  .date-info {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Caixa para o tipo do artigo; sem label, com destaque (ajuste conforme necessário) */
+  .type-info {
+    font-size: 20px; /* Pode ser ajustado conforme sua preferência */
+    font-weight: bold;
+    color: #2c3e50;
+    margin-left: 10px;
+  }
+
+  .publication-item {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    background: #fff;
+    font-family: Arial, sans-serif;
+  }
+
+  .field {
+    margin-bottom: 10px;
+  }
+
+  /* Rótulos (labels) – tamanho aumentado e cor definida */
+  .field-label {
+    font-weight: bold;
+    margin-right: 8px;
+    color: #2c3e50; /* Cor dos rótulos */
+    font-size: 20px; /* Aumentado de 18px para 20px */
+  }
+
+  /* Conteúdo (valores) – cor diferente e tamanho aumentado */
+  .field-value {
+    color: #555; /* Cor diferenciada para o conteúdo */
+    font-size: 16px; /* Aumentado de 14px para 16px */
+  }
+
+  /* Título com destaque neutro */
+  .title {
+    font-size: 20px;
+    color: #8cb936; /* Cor neutra para o título */
+    font-weight: bold;
+  }
+
+  /* Para a descrição, aplicar ellipsis se o texto for longo */
+  .field-description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* Exibe em uma única linha */
+  }
+
+  /* Estilo para o link "Read More" */
+  .readMore {
+    font-size: 16px;
+    color: #2980b9;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .readMore:hover {
+    color: #1c5980;
+  }
+
+  .found {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  .active-filters {
+    display: inline-block;
+    background-color: #f0f0f0;
+    color: #555;
+    padding: 4px 10px;
+    margin-left: 10px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: normal;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .active-filters strong {
+    font-weight: bold;
+  }
+
+</style>
+

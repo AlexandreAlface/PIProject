@@ -1,0 +1,153 @@
+<div class="actions actionsSmallGrid noPrint">
+  <button (click)="back()">{{ labels.logout.Back }}</button>
+  <div></div>
+  <button class="right" (click)="printPage()"> {{ labels.shared.Print }}</button>
+  <div>
+    <button *ngIf="isAuthenticated" class="right" (click)="editPublication()">
+      {{ labels.publications.Edit }}
+    </button>
+  </div>
+</div>
+
+<br/>
+<div class="inputs" *ngIf="publication | async as publication; else loading">
+  <div class="oneInput publication-item">
+    <!-- Cabeçalho: Open Access e Tipo do Artigo -->
+    <div class="header-row">
+      <div class="info">
+        <span class="field-label">{{ labels.publications.Database }}:</span>
+        <span class="field-value">{{ publication.origem }}</span>
+      </div>
+      <div class="info">
+        <span class="field-label">{{ labels.publications.TypeArticle }}:</span>
+        <span class="field-value">{{ publication.tipo }}</span>
+      </div>
+    </div>
+    <hr/>
+
+    <!-- Título -->
+    <div class="field" *ngIf="publication.titulo && publication.titulo !== 'N/A'">
+      <span class="field-label">{{ labels.publications.Title }}:</span>
+      <span class="field-value title">{{ publication.titulo }}</span>
+    </div>
+    <br/>
+
+    <!-- Autores -->
+    <div class="field" *ngIf="publication.autores_artigo && publication.autores_artigo !== 'N/A'">
+      <span class="field-label">{{ labels.publications.Others }}:</span>
+      <span class="field-value">{{ publication.autores_artigo }}</span>
+    </div>
+
+    <div class="field" *ngIf="publication.descricao && publication.descricao !== 'N/A'">
+      <span class="field-label">{{ labels.publications.Description }}:</span>
+      <span class="field-value">
+        {{ publication.descricao }}
+      </span>
+    </div>
+
+    <div class="field" *ngIf="publication.palavras_chave && publication.palavras_chave !== 'N/A'">
+      <span class="field-label">{{ labels.publications.Keyword }}:</span>
+      <span class="field-value">{{ publication.palavras_chave }}</span>
+    </div>
+
+    <div class="field" *ngIf="publication.afiliacoes && publication.afiliacoes !== 'N/A'">
+      <span class="field-label">{{ labels.publications.Affiliations }}:</span>
+      <span class="field-value">
+        {{ publication.afiliacoes }}
+      </span>
+    </div>
+    <!-- DOI e ISSN -->
+    <div class="field">
+      <span class="field-label">DOI:</span>
+      <span class="field-value">
+        <a class="click" href="https://doi.org/{{ publication.doi }}" target="_blank">
+          {{ publication.doi }}
+        </a>
+      </span>
+    </div>
+    <div class="field" *ngIf="publication.issn && publication.issn !== 'N/A'">
+      <span class="field-label">ISSN:</span>
+      <span class="field-value">{{ publication.issn }}</span>
+    </div>
+
+    <!-- Data de Publicação -->
+    <div class="field" *ngIf="publication.data_publicacao && publication.data_publicacao !== 'N/A'">
+      <span class="field-label">{{ labels.publications.Date }}:</span>
+      <span class="field-value">{{ publication.data_publicacao }}</span>
+    </div>
+
+    <!-- Financiador -->
+    <div class="field" *ngIf="publication.financiador && publication.financiador !== 'N/A'">
+      <span class="field-label">{{ labels.publications.Financer }}:</span>
+      <span class="field-value">{{ publication.financiador }}</span>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="loading">{{ labels.shared.Loading }}</div>
+</ng-template>
+
+<style>
+  .publication-item {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    background: #fff;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Cabeçalho com informações principais */
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .header-row .info {
+    display: flex;
+    align-items: center;
+  }
+
+  .field {
+    margin-bottom: 10px;
+  }
+
+  .field-label {
+    font-weight: bold;
+    margin-right: 8px;
+    color: #2c3e50;
+    font-size: 20px;
+  }
+
+  .field-value {
+    color: #555;
+    font-size: 16px;
+  }
+
+  .title {
+    font-size: 20px;
+    color: #8cb936;
+    font-weight: bold;
+  }
+
+  .readMore {
+    font-size: 16px;
+    color: #2980b9;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .readMore:hover {
+    color: #1c5980;
+  }
+
+  .loading {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 20px;
+  }
+</style>
+

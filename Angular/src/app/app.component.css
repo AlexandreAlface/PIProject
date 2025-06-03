@@ -1,0 +1,9 @@
+.pt{
+    background: url("/assets/pt.json") 25% / 25px 25px no-repeat;
+    white-space: nowrap
+}
+.en{
+    background: url("/assets/eng-flag.png") 25% / 25px 25px no-repeat;
+    white-space: nowrap
+}
+

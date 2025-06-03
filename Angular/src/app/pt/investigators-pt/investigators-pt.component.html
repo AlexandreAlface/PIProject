@@ -1,0 +1,196 @@
+<br>
+<div class="filtros">
+  <div class="FilterTitle">
+    {{ labels.filters.Filters }}
+  </div>
+  <br>
+  <form [formGroup]="filtersForm">
+    <div class="graficoInfo">
+      <div class="data">
+        <label for="" class="filtro">{{ labels.filters.Investigator }}: </label>
+        <input formControlName="investigator" type="text" id="investigator" placeholder="{{ labels.filters.InvestigatorPlaceholder }}">&nbsp;&nbsp;
+
+        <label for="" class="filtro">{{ labels.filters.Orcid }}: </label>
+        <input formControlName="orcid" type="text" id="orcid" placeholder="{{ labels.filters.Orcid }}">&nbsp;&nbsp;
+
+        <br><br>
+
+        <label for="" id="" class="filtro">{{ labels.filters.Department }}: </label>
+        <select formControlName="department" id="departamento">
+          <option value="Todos">{{ labels.filters.All }}</option>
+          <option *ngFor="let dept of departAllList" [value]="dept.acronym">
+            {{ dept.acronym }} - {{ dept.name }}
+          </option>
+        </select>
+
+        <br><br>
+
+        <label for="" id="" class="filtro">{{ labels.filters.Area }}: </label>
+        <select formControlName="area" id="curso">
+          <option value="Todos">{{ labels.filters.All }}</option>
+          <option *ngFor="let ciclo of ciclosEstudosList" [value]="ciclo.id">
+            {{ciclo.id}} - {{ ciclo.nome }}
+          </option>
+        </select>&nbsp;&nbsp;
+        <br>
+      </div>
+
+      <br>
+
+      <div class="actions">
+        <!--<button id="searchButton" (click)="applyFilters()" matTooltip="{{ labels.tooltips.SearchToolTip }}">
+          {{ labels.filters.Search }}
+        </button>-->
+        &nbsp;&nbsp;&nbsp;
+        <button (click)="resetFilters()" matTooltip="{{ labels.tooltips.ClearToolTip }}">
+          {{ labels.filters.Clear }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<br>
+<br>
+<div class="found">
+  {{ labels.shared.Found }}: {{ pagination.total }}
+  <span *ngIf="getActiveFilters()" class="active-filters" [innerHTML]="getActiveFilters()"></span>
+</div>
+<div class="endPage2">
+  <label>{{ labels.shared.Show }}: &nbsp;</label>
+  <div class="pages">
+    <mat-select id="pages" [(value)]="pagination.size" (valueChange)="applyFilters()">
+      <mat-option [value]="10">10</mat-option>
+      <mat-option [value]="25">25</mat-option>
+      <mat-option [value]="50">50</mat-option>
+      <mat-option [value]="-1">{{ labels.filters.All }}</mat-option>
+    </mat-select>
+  </div>
+  <div></div>
+  <label>{{ labels.shared.Sort }}: &nbsp;</label>
+  <div class="pages">
+    <mat-select id="pages" [(value)]="filtersForm.value.sort" (valueChange)="applyFilters()">
+      <mat-option [value]="'name'">{{ labels.filters.InvestigatorPlaceholder }}</mat-option>
+      <mat-option [value]="'nameR'">{{ labels.filters.InvestigatorPlaceholder }} ({{ labels.shared.Reversed }})</mat-option>
+    </mat-select>
+  </div>
+  <div></div>
+  <div class="nowPage" *ngIf="pagination.total != 0">
+    <button class="buttonSmall" (click)="changePage(-1)" *ngIf="pagination.page > 0">&lt;</button>&nbsp;
+    {{ pagination.page * (pagination.size === -1 ? pagination.total : pagination.size) + 1 }} - {{ pagination.size === -1 ? pagination.total : Math.min((pagination.page + 1) * pagination.size, pagination.total) }}&nbsp;
+    <button class="buttonSmall" (click)="changePage(1)" *ngIf="pagination.page < Math.ceil(pagination.total / pagination.size) - 1">&gt;</button>
+  </div>
+</div>
+<div *ngIf="isLoading" class="center">
+  {{ labels.shared.Loading }}
+</div>
+
+<!-- Listagem de Investigadores (estilizada similar à página de publicação detalhada) -->
+<div class="inputs">
+  <div class="oneInput" *ngFor="let investigator of investigators">
+    <div class="title">{{ investigator.nome }}</div>
+    <div class="auctor" *ngIf="investigator.orcid">ORCID: {{ investigator.orcid === 'N/A' ? labels.shared.Unknown : investigator.orcid }}</div>
+    <div class="extra" *ngIf="investigator.departamento">
+      {{ labels.filters.Department }}: {{ investigator.departamento  === 'N/A' ? labels.shared.Unknown: investigator.departamento}}
+    </div>
+    <div class="extra" *ngIf="investigator.cnaef">
+      {{ labels.filters.Area }}: {{ investigator.cnaef }}
+    </div>
+    <a class="readMore click" (click)="navigateToInvestigator(investigator.nome)">
+      {{ labels.shared.ReadMore }}
+    </a>
+  </div>
+</div>
+<div class="endPage2">
+  <label>{{ labels.shared.Show }}: &nbsp;</label>
+  <div class="pages">
+    <mat-select id="pages" [(value)]="pagination.size" (valueChange)="applyFilters()">
+      <mat-option [value]="10">10</mat-option>
+      <mat-option [value]="25">25</mat-option>
+      <mat-option [value]="50">50</mat-option>
+      <mat-option [value]="-1">{{ labels.filters.All }}</mat-option>
+    </mat-select>
+  </div>
+  <div></div>
+  <label>{{ labels.shared.Sort }}: &nbsp;</label>
+  <div class="pages">
+    <mat-select id="pages" [(value)]="filtersForm.value.sort" (valueChange)="applyFilters()">
+      <mat-option [value]="'name'">{{ labels.filters.InvestigatorPlaceholder }}</mat-option>
+      <mat-option [value]="'nameR'">{{ labels.filters.InvestigatorPlaceholder }} ({{ labels.shared.Reversed }})</mat-option>
+    </mat-select>
+  </div>
+  <div></div>
+  <div class="nowPage" *ngIf="pagination.total != 0">
+    <button class="buttonSmall" (click)="changePage(-1)" *ngIf="pagination.page > 0">&lt;</button>&nbsp;
+    {{ pagination.page * (pagination.size === -1 ? pagination.total : pagination.size) + 1 }} - {{ pagination.size === -1 ? pagination.total : Math.min((pagination.page + 1) * pagination.size, pagination.total) }}&nbsp;
+    <button class="buttonSmall" (click)="changePage(1)" *ngIf="pagination.page < Math.ceil(pagination.total / pagination.size) - 1">&gt;</button>
+  </div>
+</div>
+
+<!-- Estilos específicos para a listagem de investigadores (mantendo filtros, botões e paginação inalterados) -->
+<style>
+  /* Estilo para cada caixa de investigador */
+  .oneInput {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    background: #fff;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Título do investigador */
+  .title {
+    font-size: 20px;
+    color: #8cb936;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  /* Informações complementares (ORCID, Departamento, Área) */
+  .auctor, .extra {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 5px;
+  }
+
+  /* Link de "Read More" */
+  .readMore {
+    font-size: 16px;
+    color: #2980b9;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .readMore:hover {
+    color: #1c5980;
+  }
+
+  /* Destaque para o texto clicável */
+  .click {
+    font-weight: bold;
+  }
+
+  .found {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+  }
+
+  .active-filters {
+    display: inline-block;
+    background-color: #f0f0f0;
+    color: #555;
+    padding: 4px 10px;
+    margin-left: 10px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: normal;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .active-filters strong {
+    font-weight: bold;
+  }
+
+</style>

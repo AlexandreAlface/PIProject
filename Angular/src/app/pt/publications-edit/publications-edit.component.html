@@ -1,0 +1,177 @@
+<form *ngIf="editForm" [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
+
+  <!-- Barra de ações -->
+  <div class="actions actionsSmallGrid">
+    <!-- Botão de voltar -->
+    <button type="button" (click)="back()">
+      {{ labels.logout.Back }}
+    </button>
+    <div class="spacer"></div>
+    <!-- Botão de salvar (apenas se autenticado) -->
+    <button *ngIf="autenticado" type="submit">
+      {{ labels.publications.Save }}
+    </button>
+  </div>
+
+  <br>
+
+  <div class="inputs">
+    <div class="oneInput smaller">
+
+      <!-- Campo: Título -->
+      <div class="input-row">
+        <label>{{ labels.publications.Title }}: </label>
+        <input type="text" formControlName="titulo">
+      </div>
+      <br>
+
+      <!-- Campo: Autores do Artigo (caso exista – use o rótulo desejado) -->
+      <div class="input-row">
+        <label>{{ labels.publications.Others || 'Authors' }}: </label>
+        <input type="text" formControlName="autoresArtigo">
+      </div>
+      <br>
+
+      <!-- Campo: Fonte -->
+      <div class="input-row">
+        <label>{{ labels.publications.Source }}: </label>
+        <input type="text" formControlName="fonte">
+      </div>
+      <br>
+
+      <!-- Campo: Doi -->
+      <div class="input-row">
+        <label>DOI: </label>
+        <input type="text" formControlName="doi">
+      </div>
+      <br>
+
+      <!-- Campo: Data de Publicação -->
+      <div class="input-row">
+        <label>{{ labels.publications.Date }}: </label>
+        <input type="text" formControlName="data_publicacao">
+      </div>
+      <br>
+
+      <!-- Campo: Descrição -->
+      <div class="input-row">
+        <label>{{ labels.publications.Description }}: </label>
+        <input type="text" formControlName="descricao">
+      </div>
+      <br>
+
+      <!-- Campo: Cited By Count -->
+      <div class="input-row">
+        <label>{{ labels.publications.CitedByCount }}: </label>
+        <input type="text" formControlName="citedByCount">
+      </div>
+      <br>
+
+      <!-- Campo: Tipo (Artigos em revista, etc.) -->
+      <div class="input-row">
+        <label>{{ labels.publications.TypeArticle }}: </label>
+        <input type="text" formControlName="tipo">
+      </div>
+      <br>
+
+      <!-- Campo: Article Number -->
+      <div class="input-row">
+        <label>{{ labels.publications.ArticleNumber }}: </label>
+        <input type="text" formControlName="articleNumber">
+      </div>
+      <br>
+
+      <!-- Campo: Departamento -->
+      <div class="input-row">
+        <label>{{ labels.publications.Department }}: </label>
+        <input type="text" formControlName="departamento">
+      </div>
+      <br>
+
+      <!-- Campo: Origem -->
+      <div class="input-row">
+        <label>{{ labels.publications.Origin }}: </label>
+        <input type="text" formControlName="origem">
+      </div>
+      <br>
+
+      <!-- Campo: Orcids dos Autores -->
+      <div class="input-row">
+        <label>{{ labels.publications.AuthorOrcids }}: </label>
+        <input type="text" formControlName="orcid_autores">
+      </div>
+      <br>
+
+      <!-- Campo: Afiliacoes -->
+      <div class="input-row">
+        <label>{{ labels.publications.Affiliations }}: </label>
+        <input type="text" formControlName="afiliacoes">
+      </div>
+      <br>
+
+      <!-- Campo: Repositório IP Beja (sempre editável) -->
+      <div class="input-row">
+        <label>{{ labels.publications.LinkString }}: </label>
+        <input type="text" formControlName="repositorioIPBeja">
+      </div>
+      <br>
+
+      <!-- Campo: Apoios Publicação (sempre editável) -->
+      <div class="input-row">
+        <label>{{ labels.publications.HelpString }}: </label>
+        <input type="text" formControlName="apoiosPublicacao">
+      </div>
+      <br>
+
+      <!-- Campo: ISSN -->
+      <div class="input-row">
+        <label>{{ 'ISSN' }}: </label>
+        <input type="text" formControlName="issn">
+      </div>
+      <br>
+
+      <!-- Campo: ISBN -->
+      <div class="input-row">
+        <label>{{ 'ISBN' }}: </label>
+        <input type="text" formControlName="isbn">
+      </div>
+      <br>
+
+      <!-- Campo: Editor -->
+      <div class="input-row">
+        <label>{{ 'Editor' }}: </label>
+        <input type="text" formControlName="editor">
+      </div>
+      <br>
+
+      <!-- Campo: Financiador -->
+      <div class="input-row">
+        <label>{{ labels.publications.Financer }}: </label>
+        <input type="text" formControlName="financiador">
+      </div>
+      <br>
+
+    </div>
+  </div>
+
+</form>
+
+<style>
+  .input-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em; /* espaço entre as linhas */
+  }
+
+  .input-row label {
+    /* O label terá sua largura conforme o conteúdo */
+    margin-right: 10px;
+    white-space: nowrap; /* evita quebra de linha */
+  }
+
+  .input-row input {
+    flex: 1;              /* ocupa o restante do espaço */
+    box-sizing: border-box; /* inclui padding e borda na largura */
+  }
+
+</style>

@@ -1,0 +1,54 @@
+<!-- src/app/components/logout/logout.component.html -->
+<div class="logout-container">
+  <div class="loginSpace">
+    <div class="loginBig">
+      {{ labels.logout.Sure }}
+    </div>
+    <br>
+    <br>
+    <button (click)="logout()">{{ labels.logout.LogoutWord }}</button>
+    &nbsp;&nbsp;&nbsp;
+    <button (click)="goBack()">{{ labels.logout.Back }}</button>
+  </div>
+</div>
+
+<style>
+  .logout-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f7f7;
+  }
+
+  .loginSpace {
+    background-color: #fff;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .loginBig {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #8cb936;
+    color: #fff;
+    transition: background-color 0.3s;
+  }
+
+  button:hover {
+    background-color: #7aa02c;
+  }
+
+</style>

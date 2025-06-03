@@ -1,0 +1,116 @@
+{
+    "ENG":{
+        "nav":{
+            "Start":"Start",
+            "Publications":"Publications",
+            "Investigators":"Investigators",
+            "Admin":"Administrador",
+            "Login":"Login",
+            "Logout":"Logout"
+        },
+        "filters":{
+            "Filters":"Filters",
+            "Department":"Department",
+            "Area":"Study programmes (CNAEF Areas)",
+            "DataStart":"Starting date",
+            "DataEnd":"Ending date",
+            "Search":"Search",
+            "Clear":"Clear",
+            "Orcid":"Orcid",
+            "Investigator":"Investigator",
+            "Title": "Title",
+            "TitlePlaceholder": "Article's title",
+            "InvestigatorPlaceholder": "Investigator's name",
+            "All": "All",
+            "Both": "Both",
+            "Database": "Database"
+        },
+        "dashboard":{
+            "Articles": "Articles",
+            "Books": "Reviews",
+            "BookSeries": "Book Chapters",
+            "Meeting": "Conference Papers",
+            "Update": "Update articles"
+        },
+        "shared": {
+            "Found": "Found results",
+            "Show": "Show per page",
+            "Date": "Date",
+            "Type": "Type of Publication",
+            "Sort": "Sort by",
+            "ReadMore" : "See More",
+            "Print": "Print",
+            "Article": "Article",
+            "Book": "Book",
+            "BookSerie": "Book Series",
+            "Meeting": "Conference proceeding",
+            "Other": "Other",
+            "PublicationsReadMore": "/Publications/View/",
+            "AuthorsReadMore": "/Investigators/View/",
+            "NoPublications": "There aren't any articles associated to this investigator.",
+            "Reversed": "Reversed",
+            "Loading": "Loading..."
+        },
+        "login":{
+            "Login":"Login",
+            "Username":"Username",
+            "Password":"Password",
+            "Wrong": "Wrong Username or/and Password. Try again."
+        },
+        "logout":{
+            "Sure": "Are you sure you want to logout?",
+            "LogoutWord": "Logout",
+            "Back": "Go back"
+        },
+        "admin":{
+            "UpdateArticles": "Update articles",
+            "UploadInvestigators": "Upload investigators",
+            "UploadAreas":"Upload study programme (CNAEF Areas)",
+            "DownloadAll":"Download unified table",
+            "LastUpdate":"Last Updated",
+            "Areas":"Study programmes (CNAEF Areas)",
+            "Investigators": "Investigators",
+            "FileString": "File",
+            "DataString":"Data",
+            "Download":"Download",
+            "DeleteString":"Delete",
+            "Manual": "Manual",
+            "Automatic": "Automatic",
+            "New": "New articles",
+            "No": "There was no new articles"
+        },
+        "publications":{
+            "OpenAccess" : "Type of Access",
+            "TypeArticle" : "Publication type",
+            "Topic" : "Topic",
+            "LinkString" : "IPBeja's repository",
+            "HelpString" : "Publications's supports",
+            "NoFunding" : "There are no known funding attached to this article",
+            "Database" : "Database",
+            "Closed" : "Closed",
+            "Unknown" : "Unknown",
+            "Opened" : "Opened",
+            "Sponsor" : "Sponsor",
+            "FundingN" : "Funding Number",
+            "Edit": "Edit",
+            "Save": "Save",
+            "View": "View",
+            "Title": "Publication's Title",
+            "Main": "First author",
+            "Others": "Other authores",
+            "Date": "Publication date",
+            "Extra": "Type"
+        },
+        "tooltips":{
+            "UpdateArticlesToolTip": "This action will get new existing articles from Scopus and Web of Science, and add them to the collection.",
+            "UploadInvestigatorsToolTip": "Upload a new file with new information about the investigators to server, replacing the old information.",
+            "UploadAreasToolTip":"Upload a new file with new information about the study programmes to server, replacing the old information.",
+            "DownloadAllToolTip":"This action will start the download of a CSV file with all the tables with relative information: Scopus, Web of Science, Combined, Investigators, and Areas.",
+            "DownloadToolTip":"This action will download this file from this history to your computer.",
+            "DeleteToolTip":"This action will delete this file from history.This action is irreversible! Proceed with caution.",
+            "SearchToolTip":"Search with the tags located above.",
+            "ClearToolTip":"Clear the tags, returning the results without the tags.",
+            "PrintToolTip":"Print the page in front of you to PDF."
+        }
+    }
+}

@@ -1,0 +1,111 @@
+{
+    "PT":{
+        "nav":{
+            "Start":"Início",
+            "Publications":"Publicações",
+            "Investigators":"Investigadores",
+            "Admin":"Administrador",
+            "Login":"Entrar",
+            "Logout":"Sair"
+        },
+        "filters":{
+            "Filters":"Filtros",
+            "Department":"Departamento",
+            "Area":"Ciclo de estudos (Areas CNAEF)",
+            "DataStart":"Data inicial",
+            "DataEnd":"Data final",
+            "Search":"Pesquisar",
+            "Clear":"Limpar",
+            "Orcid":"Orcid",
+            "Investigator":"Investigator",
+            "Title": "Título",
+            "TitlePlaceholder": "Título do artigo",
+            "InvestigatorPlaceholder": "Nome do investigador",
+            "All": "Todos",
+            "Both": "Ambos",
+            "Database": "Base de dados"
+        },
+        "dashboard":{
+            "Articles": "Artigos",
+            "Books": "Reviews",
+            "BookSeries": "Capitulo de livro",
+            "Meeting": "Papeis de conferência",
+            "Update": "Actualizar artigos"
+        },
+        "shared": {
+            "Found": "Resultados encontrados",
+            "Show": "Mostra por página",
+            "Date": "Data",
+            "Type": "Tipo de publicação",
+            "Sort": "Ordenar",
+            "ReadMore" : "Ver Mais",
+            "Print": "Imprimir",
+            "PublicationsReadMore": "/Publicações/Ver/",
+            "AuthorsReadMore": "/Investigadores/Ver/",
+            "NoPublications": "Não há nenhuma publicação associada a este investigador.",
+            "Reversed": "Invertido",
+            "Loading": "Carregando..."
+        },
+        "login":{
+            "Login":"Entrar",
+            "Username":"Utilizador",
+            "Password":"Palavra-Passe",
+            "Wrong": "Utilizador ou/e Palavra-Passe errada. Tente outra vez."
+        },
+        "logout":{
+            "Sure": "Tem a certeza que quer sair?",
+            "LogoutWord": "Sair",
+            "Back": "Voltar"
+        },
+        "admin":{
+            "UpdateArticles": "Actualizar Lista de Artigos",
+            "UploadInvestigators": "Importar tabela de Investigadores",
+            "UploadAreas":"Importar tabela de ciclo de estudos",
+            "DownloadAll":"Exportar tabela unificada",
+            "LastUpdate":"Última actualização",
+            "Areas":"Ciclo de estudos (Areas CNAEF)",
+            "Investigators": "Investigadores",
+            "FileString": "Ficheiro",
+            "DataString":"Data",
+            "Download":"Exportar",
+            "DeleteString":"Eliminar",
+            "Manual": "Manual",
+            "Automatic": "Automático",
+            "New": "Novos artigos",
+            "No": "Não houve nenhum novo artigo"
+        },
+        "publications":{
+            "OpenAccess" : "Tipo de Acesso",
+            "TypeArticle" : "Tipo de publicação",
+            "Topic" : "Tópico",
+            "LinkString" : "Repositório da IPBeja",
+            "HelpString" : "Apoios da publicação",
+            "NoFunding" : "Não houve financiamento neste artigo ou o financiamento deste artigo é desconhecido.",
+            "Database" : "Base de dados",
+            "Closed" : "Fechado",
+            "Unknown" : "Desconhecido",
+            "Opened" : "Aberto",
+            "Sponsor" : "Financiador",
+            "FundingN" : "Número de financiamento",
+            "Edit": "Editar",
+            "Save": "Salvar",
+            "View": "Ver",
+            "Title": "Título da publicação",
+            "Main": "Primeiro autor",
+            "Others": "Outros autores",
+            "Date": "Data de publicação",
+            "Extra": "Tipo"
+        },
+        "tooltips":{
+            "UpdateArticlesToolTip": "Esta ação irá buscar novos artigos, se existentes, ao Scopus e Web of Science, e adiciona-los á coleção.",
+            "UploadInvestigatorsToolTip": "Transfere um novo ficheiro com as informações dos investigadores actualizadas para o servidor para substitui a informação antiga.",
+            "UploadAreasToolTip":"Transfere um novo ficheiro com as informações dos ciclo de estudos actualizadas para o servidor para substitui a informação antiga.",
+            "DownloadAllToolTip":"Esta ação irá começar o download de um ficheiro CSV com todas tabelas de informação: Scopus, Web of Science, Combinadas, Investigadores, e Cursos.",
+            "DownloadToolTip":"Esta ação irá extrair este ficheiro do histórico para o seu computador.",
+            "DeleteToolTip":"Esta ação irá retirar este ficheiro do histórico. Esta ação é irreversível! Persiga com cuidado.",
+            "SearchToolTip":"Procure com os filtros localizados acima.",
+            "ClearToolTip":"Limpe os filtros, retomando resultados sem os filtros.",
+            "PrintToolTip":"Imprime a página á sua frente para PDF."
+        }
+    }
+}

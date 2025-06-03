@@ -1,0 +1,24 @@
+<br>
+<div class="filtros">
+  <div class="loginSpace">
+    <div class="loginBig">
+      {{ labels.login.Login }}
+    </div>
+    <br>
+    <!-- Exibe mensagem de erro se houver -->
+    <div *ngIf="errorMessage" class="again">
+      {{ errorMessage }}
+    </div>
+    <br>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <label class="login">{{ labels.login.Username }}: </label>
+      <input type="text" formControlName="email" placeholder="{{ labels.login.Username }}">
+      <br><br>
+      <label class="login">{{ labels.login.Password }}: </label>
+      <input type="password" formControlName="password" placeholder="{{ labels.login.Password }}">
+      <br><br>
+      <button type="submit">{{ labels.login.Login }}</button>
+    </form>
+  </div>
+</div>
+

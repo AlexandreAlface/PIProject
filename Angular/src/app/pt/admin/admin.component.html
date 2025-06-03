@@ -1,0 +1,127 @@
+<br>
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="loading-spinner">
+    <div class="loading">{{ labels.shared.Loading }}</div>
+  </div>
+</div>
+<div class="filtros">
+  <div class="FilterTitle">
+    {{ labels.nav.Admin }}
+  </div>
+  <div class="actions">
+    <button class="adminActions" (click)="updateArticles()">
+      {{ labels.admin.UpdateArticles }}
+    </button>
+    &nbsp; &nbsp; &nbsp;
+
+    <label class="adminActions">
+      <input type="file" (change)="uploadFile($event, 'investigators')" />
+      {{ labels.admin.UploadInvestigators }}
+    </label>
+
+    &nbsp; &nbsp; &nbsp;
+
+    <label class="adminActions">
+      <input type="file" (change)="uploadFile($event, 'areas')" />
+      {{ labels.admin.UploadAreas }}
+    </label>
+
+    &nbsp; &nbsp; &nbsp;
+    <button class="adminActions" (click)="downloadUnifiedTable()">
+      {{ labels.admin.DownloadAll }}
+    </button>
+  </div>
+</div>
+
+<!-- 🔹 Mostrar mensagem de erro -->
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>
+
+<div class="updated">{{ labels.admin.LastUpdate }}: {{ this.lastUpdate }}</div>
+<br>
+
+<div class="filesData">
+  <div class="partData">
+    {{ labels.admin.Investigators }}
+    <table>
+      <thead>
+      <tr>
+        <th>{{ labels.admin.FileString }}</th>
+        <th>{{ labels.admin.DataString }}</th>
+        <th>{{ labels.admin.Download }}</th>
+        <th>{{ labels.admin.DeleteString }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of filesInvestigators">
+        <td>{{ item.name }}</td>
+        <td>{{ item.date }}</td>
+        <td>
+          <button (click)="downloadFile(item.name, 'investigators')">
+            {{ labels.admin.Download }}
+          </button>
+        </td>
+        <td>
+          <button (click)="deleteFile(item.name, 'investigators')">
+            {{ labels.admin.DeleteString }}
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="partData">
+    {{ labels.admin.Areas }}
+    <table>
+      <thead>
+      <tr>
+        <th>{{ labels.admin.FileString }}</th>
+        <th>{{ labels.admin.DataString }}</th>
+        <th>{{ labels.admin.Download }}</th>
+        <th>{{ labels.admin.DeleteString }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of filesAreas">
+        <td>{{ item.name }}</td>
+        <td>{{ item.date }}</td>
+        <td>
+          <button (click)="downloadFile(item.name, 'areas')">
+            {{ labels.admin.Download }}
+          </button>
+        </td>
+        <td>
+          <button (click)="deleteFile(item.name, 'areas')">
+            {{ labels.admin.DeleteString }}
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br>
+<br>
+
+<style>
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* fundo semi-transparente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Certifique-se de que fique sobre os outros elementos */
+  }
+
+  .loading-spinner {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #333;
+  }
+</style>

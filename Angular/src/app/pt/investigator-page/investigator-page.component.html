@@ -1,0 +1,114 @@
+<div class="actions actionsSmallGrid noPrint">
+  <button (click)="back()">{{ labels.logout.Back }}</button>
+  <div></div>
+  <button class="right" (click)="printPage()"> {{ labels.shared.Print }} </button>
+  <div></div>
+</div>
+
+<br>
+
+<div class="inputs">
+  <div class="oneInput">
+    <div *ngIf="investigator | async as invest; else loading">
+      <br>
+      <div class="title">{{ invest.nome }}</div>
+      <div class="auctor" *ngIf="invest.orcid">
+        ORCID: {{ invest.orcid }}
+      </div>
+      <div class="auctor" *ngIf="invest.departamento">
+        {{ labels.filters.Department }}: {{ invest.departamento }}
+      </div>
+      <div class="auctor" *ngIf="invest.cnaef">
+        {{ labels.filters.Area }}: {{ invest.cnaef }}
+      </div>
+      <br>
+      {{ labels.nav.Publications }}:
+      <br><br>
+
+      <ng-container *ngIf="publicationsByYear | async as publicationsMap">
+        <div *ngIf="publicationsMap.size > 0; else noPublications">
+          <div *ngFor="let year of publicationsMap.keys()">
+            <h3 class="year-label">{{ year }}</h3>
+            <div *ngFor="let article of publicationsMap.get(year)">
+              <a class="small" (click)="navigateToPublication(article.id)">
+                • <span class="click">{{ article.titulo }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-template #noPublications>
+        <div>{{ labels.shared.NoPublications }}</div>
+      </ng-template>
+    </div>
+
+    <ng-template #loading>
+      <div class="loading">{{ labels.shared.Loading }}</div>
+    </ng-template>
+  </div>
+</div>
+
+<style>
+  /* Container principal */
+  .inputs {
+    margin-top: 20px;
+  }
+
+  /* Caixa que envolve os dados do investigador */
+  .oneInput {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 6px;
+    background: #fff;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Título do investigador */
+  .title {
+    font-size: 20px;
+    color: #8cb936;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  /* Informações complementares */
+  .auctor {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 5px;
+  }
+
+  /* Estilo para os links de artigos */
+  .small {
+    font-size: 16px;
+    color: #2980b9;
+    text-decoration: underline;
+    cursor: pointer;
+    display: block;
+    margin-bottom: 5px;
+  }
+  .small:hover {
+    color: #1c5980;
+  }
+
+  /* Classe para textos de carregamento */
+  .loading {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  /* Destaque para os links */
+  .click {
+    font-weight: lighter;
+  }
+
+  /* Estilo para os anos */
+  .year-label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #8cb936;
+    margin-top: 15px;
+  }
+</style>

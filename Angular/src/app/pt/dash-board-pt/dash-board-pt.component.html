@@ -1,0 +1,127 @@
+<br>
+<div>
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="loading-spinner">
+      <div class="loading">{{ dashboardLabels.shared.Loading }}</div>
+    </div>
+  </div>
+  <div class="filtros noPrint">
+    <div class="FilterTitle">
+      {{ dashboardLabels.filters.Filters }}
+    </div>
+    <br>
+    <div class="graficoInfo" [formGroup]="filtersForm">
+      <div class="data">
+        <label for="" id="" class="filtro"> {{ dashboardLabels.filters.Department }}: </label>
+        <select formControlName="departamento" id="departamento">
+          <option value="Todos">{{ dashboardLabels.filters.All }}</option>
+          <option *ngFor="let dept of departAllList" [value]="dept.acronym">
+            {{ dept.acronym }} - {{ dept.name }}
+          </option>
+        </select>
+        &nbsp;&nbsp;
+
+        <label id="" class="filtro"> {{ dashboardLabels.filters.Database }}: </label>
+        <select formControlName="dbValue" id="db">
+          <option value="Ambos">{{ dashboardLabels.filters.Both }}</option>
+          <option value="WBS">Web of Science</option>
+          <option value="Scopus">Scopus</option>
+        </select>
+
+        <br>
+        <br>
+
+        <label id="" class="filtro"> {{ dashboardLabels.filters.Area }}: </label>
+        <select formControlName="cicloEstudo" id="departamento">
+          <option value="Todos">{{ dashboardLabels.filters.All }}</option>
+          <option *ngFor="let ciclo of ciclosEstudosList" [value]="ciclo.id">
+            {{ciclo.id}} - {{ ciclo.nome }}
+          </option>
+        </select>
+        &nbsp;&nbsp;
+
+        <label for="" id="" class="filtro"> {{ dashboardLabels.filters.DataStart }}: </label>
+        <input
+          type="date"
+          formControlName="dataStart"
+          id="dataInicial"
+          min="1900-01-01"
+          max="2900-12-31"
+        />
+        &nbsp;&nbsp;
+
+        <label for="" id="" class="filtro"> {{ dashboardLabels.filters.DataEnd }}: </label>
+        <input
+          type="date"
+          id="dataInicial"
+          formControlName="dataEnd"
+          min="1900-01-01"
+          max="2900-12-31"
+        />
+        &nbsp;&nbsp;
+      </div>
+      <br>
+      <div class="actions actionsPlusGrid">
+        <button (click)="resetFilters()" matTooltip="{{ dashboardLabels.tooltips.ClearToolTip }}">
+          {{ dashboardLabels.filters.Clear }}
+        </button>
+        <div></div>
+
+        <button
+          class="right"
+          *ngIf="isAuthenticated"
+          (click)="updateArticles()"
+          matTooltip="{{ dashboardLabels.tooltips.UpdateArticlesToolTip }}"
+        >
+          {{ dashboardLabels.dashboard.Update }}
+        </button>
+
+        <button class="right" (click)="printPage()" matTooltip="{{ dashboardLabels.tooltips.PrintToolTip }}">
+          {{ dashboardLabels.shared.Print }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <br>
+
+  <div class="chart-box print">
+    <div class="flex-container">
+      <div class="info">
+        <div class="a1"></div>
+        <a>{{ dashboardLabels.dashboard.Revista }}: {{ dashboardData.revistaCount }} ({{ dashboardData.percentages.revista }})</a>
+        <div class="a2"></div>
+        <a>{{ dashboardLabels.dashboard.Capitulo }}: {{ dashboardData.capituloCount }} ({{ dashboardData.percentages.capitulo }})</a>
+        <div class="a4"></div>
+        <a>{{ dashboardLabels.dashboard.Conferencia }}: {{ dashboardData.conferenciaCount }} ({{ dashboardData.percentages.conferencia }})</a>
+        <div class="a3"></div>
+        <a>{{ dashboardLabels.dashboard.Outro }}: {{ dashboardData.outroCount }} ({{ dashboardData.percentages.outro }})</a>
+      </div>
+      <div class="chart-container">
+        <canvas id="MyChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* fundo semi-transparente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Certifique-se de que fique sobre os outros elementos */
+  }
+
+  .loading-spinner {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #333;
+  }
+</style>
