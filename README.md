@@ -1,4 +1,4 @@
-### Introdução
+### Introduction
 The IPBeja library staff identified the need to validate and update
 information on scientific publications whose authors are teachers and
 researchers at the institution. To do so, they have to manually consult various
@@ -14,7 +14,7 @@ library staff. This web system consists of a frontend developed
 in Angular and an API in Laravel.
 
 Translated with DeepL.com (free version)
-### Objectivos
+### Objectives
 This edition of the project aims to continue developing this prototype with a view to
 order to correct several problems identified by the Library Director, overcome
 some other limitations of the previous work, and add new use cases.
